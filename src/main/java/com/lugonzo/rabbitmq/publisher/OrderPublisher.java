@@ -35,7 +35,7 @@ public class OrderPublisher {
 
         log.info(orderStatus.toString());
 
-        template.convertAndSend(MessageConfig.EXCHANGE,MessageConfig.ROUTING_KEY,orderStatus);
+        template.convertAndSend(MessageConfig.EXCHANGE,MessageConfig.ROUTING_KEY,orderStatus.toString());
         return "Success !!! 🥳🥳🥳";
     }
 
