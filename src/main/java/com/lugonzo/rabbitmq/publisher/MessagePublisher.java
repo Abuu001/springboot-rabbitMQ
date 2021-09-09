@@ -27,6 +27,7 @@ public class MessagePublisher {
         newMessage.setMessageId(UUID.randomUUID().toString());
         newMessage.setMessageDate(new Date());
 
+        System.out.println("::::::::::::::::::::Mess PUBLISHER:::::::::::::::::::::::::");
         rabbitTemplate.convertAndSend(MQConfig.EXCHANGE,MQConfig.ROUTING_KEY,newMessage);
 
         return "Message Published 🚀🚀🚀";

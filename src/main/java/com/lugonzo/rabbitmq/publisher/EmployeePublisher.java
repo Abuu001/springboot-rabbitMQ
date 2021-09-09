@@ -4,6 +4,7 @@ import com.lugonzo.rabbitmq.config.RabbitMQConf;
 import com.lugonzo.rabbitmq.dto.Employee;
 import com.lugonzo.rabbitmq.dto.Gender;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.logging.log4j.message.SimpleMessage;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,7 +17,7 @@ import java.util.UUID;
 @Slf4j
 @RestController
 @RequestMapping("/api/v1/employee")
-public class EmployeePublisher {
+public class EmployeePublisher  {
 
     @Autowired
     RabbitTemplate rabbitTemplate;
@@ -31,8 +32,9 @@ public class EmployeePublisher {
                 .age(21)
                 .build();
 
+        log.info("::::::::::::::::::::::::::EMPLOYEE PUBLISHER::::::::::::::::::::::::::::::::::;;;");
         log.info(employee1.toString());
-        rabbitTemplate.convertAndSend(RabbitMQConf.EXCHANGENAME, RabbitMQConf.ROUTINGKEY,employee1.toString());
+        rabbitTemplate.convertAndSend(RabbitMQConf.EXCHANGENAME, RabbitMQConf.ROUTINGKEY,employee1);
 
         return "Message sent to the RabbitMQ JavaInUse Successfully 🤡🤡🤡";
     }
