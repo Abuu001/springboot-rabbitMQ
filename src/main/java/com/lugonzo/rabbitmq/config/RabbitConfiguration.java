@@ -8,31 +8,31 @@ import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.amqp.support.converter.MessageConverter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class RabbitConfiguration {
 
-    public static final String QUEUE_A="queue.A";
-    public static final String ROUTING_A="routing.A";
-    public static final String EXCHANGE_A="exchange.direct";
+    @Autowired
+    MessageQueueProperties messageQueueProperties;
 
     @Bean
     Queue queueA(){
-        return  new Queue(QUEUE_A,false);
+        return  new Queue(messageQueueProperties.getMessagequeue(),false);
     }
 
     @Bean
     DirectExchange exchangeA(){
-        return new DirectExchange("exchange.direct");
+        return new DirectExchange(messageQueueProperties.getMessageexchange());
     }
 
     @Bean
     Binding bindingA(Queue queueA, DirectExchange exchangeA){
         return BindingBuilder.bind(queueA)
                 .to(exchangeA)
-                .with(ROUTING_A);
+                .with(messageQueueProperties.getMessagerouting());
 
     }
 

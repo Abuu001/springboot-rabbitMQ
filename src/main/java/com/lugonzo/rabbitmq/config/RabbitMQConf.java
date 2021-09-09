@@ -5,29 +5,29 @@ import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.amqp.support.converter.MessageConverter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class RabbitMQConf {
 
-    public static final String QUEUENAME="employee_queuename";
-    public static final String EXCHANGENAME="employee_exchangename";
-    public static final String ROUTINGKEY="employee_routingkey";
+    @Autowired
+    MessageQueueProperties messageQueueProperties;
 
     @Bean
   public Queue queue2(){
-      return new Queue(QUEUENAME);
+      return new Queue(messageQueueProperties.getEmployeeequeue());
   }
 
     @Bean
     public DirectExchange directExchange(){
-        return new DirectExchange(EXCHANGENAME);
+        return new DirectExchange(messageQueueProperties.getEmployeexchange());
    }
 
    @Bean
   public Binding binding2(Queue queue2,DirectExchange directExchange){
-        return  BindingBuilder.bind(queue2).to(directExchange).with(ROUTINGKEY);
+        return  BindingBuilder.bind(queue2).to(directExchange).with(messageQueueProperties.getEmployeerouting());
   }
 
      @Bean
