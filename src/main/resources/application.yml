@@ -1,0 +1,9 @@
+
+
+message:
+  messagequeue: queue.A
+  messagerouting: routing.A
+  messageexchange: exchange.direct
+  employeeequeue: employee.queuename
+  employeerouting: employee.exchangename
+  employeexchange: employee.routingkey
