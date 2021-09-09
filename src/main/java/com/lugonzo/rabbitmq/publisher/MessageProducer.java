@@ -1,5 +1,6 @@
 package com.lugonzo.rabbitmq.publisher;
 
+import com.lugonzo.rabbitmq.config.MessageQueueProperties;
 import com.lugonzo.rabbitmq.config.RabbitConfiguration;
 import com.lugonzo.rabbitmq.dto.Message;
 import lombok.extern.slf4j.Slf4j;
@@ -19,11 +20,14 @@ public class MessageProducer {
     @Autowired
     private RabbitConfiguration rabbitConfiguration;
 
+    @Autowired
+    MessageQueueProperties messageQueueProperties;
+
     @PostMapping("/post")
     public String send(@RequestBody  Message message){
 
         log.info("::::::::::::::::::::::::::::::::::::MESSAGE PUBLISHER:::::::::::::::::::::::::::::::");
-        rabbitTemplate.convertAndSend(RabbitConfiguration.EXCHANGE_A, "routing.A",message);
+        rabbitTemplate.convertAndSend(messageQueueProperties.getMessageexchange(), "routing.A",message);
 
         log.info(message.toString());
         return "Message sent Succesfully";

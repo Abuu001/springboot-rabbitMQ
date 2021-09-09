@@ -1,5 +1,6 @@
 package com.lugonzo.rabbitmq.publisher;
 
+import com.lugonzo.rabbitmq.config.MessageQueueProperties;
 import com.lugonzo.rabbitmq.config.RabbitMQConf;
 import com.lugonzo.rabbitmq.dto.Employee;
 import com.lugonzo.rabbitmq.dto.Gender;
@@ -22,6 +23,9 @@ public class EmployeePublisher  {
     @Autowired
     RabbitTemplate rabbitTemplate;
 
+    @Autowired
+    MessageQueueProperties messageQueueProperties;
+
     @GetMapping("/producer")
     public String getEmployee(@RequestParam("empName") String empName){
 
@@ -34,7 +38,7 @@ public class EmployeePublisher  {
 
         log.info("::::::::::::::::::::::::::EMPLOYEE PUBLISHER::::::::::::::::::::::::::::::::::;;;");
         log.info(employee1.toString());
-        rabbitTemplate.convertAndSend(RabbitMQConf.EXCHANGENAME, RabbitMQConf.ROUTINGKEY,employee1);
+        rabbitTemplate.convertAndSend(messageQueueProperties.getEmployeexchange(), messageQueueProperties.getEmployeerouting(),employee1);
 
         return "Message sent to the RabbitMQ JavaInUse Successfully 🤡🤡🤡";
     }
