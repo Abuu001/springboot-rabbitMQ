@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class MessageConsumer {
 
-    @RabbitListener(queues = RabbitConfiguration.QUEUE_A)
+    @RabbitListener(queues = "queue.A")
     private void receiveMessage(Message message){
         log.info(":::::::::::::::::::::::::MESSAGE CONSUMER::::::::::::::::::::::::::::;;;;");
         log.info("Message received Successfully {consumer}" +message);

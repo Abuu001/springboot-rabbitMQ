@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class EmployeeListener {
 
-    @RabbitListener(queues = RabbitMQConf.QUEUENAME)
+    @RabbitListener(queues = "employee.queuename")
     public void EmployeeListener(Employee employee){
         log.info("::::::::::::::::::::CUSTOM MESSAGE LISTENER::::::::::::::::::::::::");
         log.info(String.valueOf(employee));
